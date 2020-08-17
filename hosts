@@ -1,0 +1,23 @@
+all:
+  hosts:
+    master:
+      ansible_host: 172.17.0.101
+      ip: 172.17.0.101
+      access_ip: 172.17.0.101
+      ansible_user: abc-user
+  children:
+    kube-master:
+      hosts:
+        master:
+    kube-node:
+      hosts:
+        master:
+    etcd:
+      hosts:
+        master:
+    k8s-cluster:
+      children:
+        kube-master:
+        kube-node:
+    calico-rr:
+      hosts: {}

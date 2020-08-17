@@ -1,0 +1,26 @@
+version: '3.5'
+services:
+  prod_ansible_kubespray:
+    build: .
+    network_mode: bridge
+    hostname: prod_ansible_kubespray
+    container_name: kube
+    cap_add:
+      - NET_ADMIN
+      - SYS_ADMIN
+    volumes:
+      - ./ansible-key:/root/.ssh/id_rsa
+      - ./hosts:/etc/ansible/hosts
+      - ./kubespray:/tmp/kubespray
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: bash -c "
+        cp -rfp /tmp/kubespray/inventory/sample/. /tmp/kubespray/inventory/mycluster/
+        && cp /etc/ansible/hosts /tmp/kubespray/inventory/mycluster/hosts.yaml
+        && tail -f /dev/null
+      "
+
+#        && tail -f /dev/null
+#        && ansible-playbook -i /tmp/kubespray/inventory/mycluster/hosts.yaml  --become --become-user=root /tmp/kubespray/cluster.yml        
+#        && cp -rfp /tmp/kubespray/inventory/sample /tmp/kubespray/inventory/mycluster
+#        && cp /etc/ansible/hosts /tmp/kubespray/inventory/mycluster/hosts.yaml
+
