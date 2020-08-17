@@ -4,8 +4,9 @@ For Fedora coreos:
 /usr/bin/sed -i 's/^enabled=.*/enabled=0/' /etc/yum.repos.d/fedora-updates.repo
 ```
 
+Edit kubespray file group_vars/all/all.yml
+
 ```
-vi group_vars/all/all.yml
 
 where the binaries will be installed
 
